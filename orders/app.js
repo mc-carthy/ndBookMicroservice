@@ -49,8 +49,8 @@ app.get('/orders/:id', (req, res) => {
 
 app.post('/order', (req, res) => {
     let newOrder = {
-        customerId: req.body.customerId,
-        bookId: req.body.bookId,
+        customerId: mongoose.Types.ObjectId(req.body.customerId),
+        bookId: mongoose.Types.ObjectId(req.body.bookId),
         orderDate: req.body.orderDate,
         returnDate: req.body.returnDate
     };
