@@ -66,3 +66,13 @@ app.post('/book', (req, res) => {
     });
     res.send("Book created successfully");
 });
+
+app.delete('/book/:id', (req, res) => {
+    Book.findOneAndRemove(req.params.id).then(() => {
+        res.send('Book removed successfully');
+    }).catch((err) => {
+        if (err) {
+            throw err;
+        }
+    });
+});
