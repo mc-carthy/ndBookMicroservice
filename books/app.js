@@ -23,6 +23,30 @@ app.get('/', (req, res) => {
     res.send('Root endpoint');
 });
 
+app.get('/books', (req, res) => {
+    Book.find().then((books) => {
+        res.json(books);
+    }).catch((err) => {
+        if (err) {
+            throw err;
+        }
+    });
+});
+
+app.get('/books/:id', (req, res) => {
+    Book.findById(req.params.id).then((book) => {
+        if (book) {
+            res.json(book);
+        } else {
+            res.sendStatus(404);
+        }
+    }).catch((err) => {
+        if (err) {
+            throw err;
+        }
+    });
+})
+
 app.post('/book', (req, res) => {
     let newBook = {
         title: req.body.title,
