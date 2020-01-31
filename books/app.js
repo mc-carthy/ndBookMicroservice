@@ -20,7 +20,7 @@ app.listen(4545, () => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Root endpoint');
+    res.send('Book service root endpoint');
 });
 
 app.get('/books', (req, res) => {
