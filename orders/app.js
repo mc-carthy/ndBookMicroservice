@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const axios = require('axios')
 require('./order')
 const Order = mongoose.model("Order");
 
@@ -34,9 +35,18 @@ app.get('/orders', (req, res) => {
 });
 
 app.get('/orders/:id', (req, res) => {
-    Orders.findById(req.params.id).then((order) => {
+    Order.findById(req.params.id).then((order) => {
         if (order) {
-            res.json(order);
+            axios.get('http://localhost:5555/customers/' + order.customerId).then((customerRespose) => {
+                let orderObject = {
+                    customerName: customerRespose.data.name,
+                    bookTitle: ""
+                };
+                axios.get('http://localhost:4545/books/' + order.bookId).then((bookResponse) => {
+                    orderObject.bookTitle = bookResponse.data.title
+                    res.json(orderObject)
+                });
+            });
         } else {
             res.sendStatus(404);
         }
